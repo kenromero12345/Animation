@@ -298,8 +298,8 @@ BobaRunUpLookRight.prototype.update = function () {
 
 function BobaDisappearRight(game, spritesheet) {
     this.animation = new Animation(spritesheet, 593, 560, 74, 85, 6, 0.18, 6, false, 1, true);
-    this.x = 200;
-    this.y = 200;
+    this.x = 100;
+    this.y = 300;
     this.speed = 150;
     this.game = game;
     this.ctx = game.ctx;
@@ -315,38 +315,39 @@ BobaDisappearRight.prototype.update = function () {
     // if (this.x < -230) this.x = 800;
 }
 
-function BobaAttackLeft(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 593, 560, 74, 85, 6, 0.18, 6, false, 1, true);
-    this.x = 200;
-    this.y = 200;
-    this.speed = 150;
+function BobaAtkRight(game, spritesheet) {
+    this.animation = new Animation(spritesheet, 0, 0, 450, 150, 14, 0.18, 14, false, 1, true);
+    this.x = 350;
+    this.y = 300;
+    this.speed = 140;
     this.game = game;
     this.ctx = game.ctx;
 }
 
-BobaAttackLeft.prototype.draw = function () {
+BobaAtkRight.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
 }
 
-BobaAttackLeft.prototype.update = function () {
+BobaAtkRight.prototype.update = function () {
     // if (this.animation.elapsedTime < this.animation.totalTime * 8 / 14)
-    //     this.x -= this.game.clockTick * this.speed;
+    //     this.x += this.game.clockTick * this.speed;
     // if (this.x < -230) this.x = 800;
 }
-function BobaAttackRight(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 593, 560, 74, 85, 6, 0.18, 6, false, 1, true);
-    this.x = 200;
-    this.y = 200;
-    this.speed = 150;
+
+function BobaAtkLeft(game, spritesheet) {
+    this.animation = new Animation(spritesheet, 0, 0, 450, 150, 14, 0.18, 14, false, 1, false);
+    this.x = 0;
+    this.y = 300;
+    this.speed = 140;
     this.game = game;
     this.ctx = game.ctx;
 }
 
-BobaAttackRight.prototype.draw = function () {
+BobaAtkLeft.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
 }
 
-BobaAttackRight.prototype.update = function () {
+BobaAtkLeft.prototype.update = function () {
     // if (this.animation.elapsedTime < this.animation.totalTime * 8 / 14)
     //     this.x -= this.game.clockTick * this.speed;
     // if (this.x < -230) this.x = 800;
@@ -354,7 +355,8 @@ BobaAttackRight.prototype.update = function () {
 
 AM.queueDownload("./img/22137.png")
 AM.queueDownload("./img/22137Flip.png")
-
+AM.queueDownload("./img/22137AtkFlip.png")
+AM.queueDownload("./img/22137Atk.png")
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
@@ -385,11 +387,10 @@ AM.downloadAll(function () {
 		gameEngine.addEntity(new BobaDisappearLeft(gameEngine, AM.getAsset("./img/22137.png")));
 		gameEngine.addEntity(new BobaDisappearRight(gameEngine, AM.getAsset("./img/22137Flip.png")));
 	})
-	// sleep(17000).then(() => {
-		// gameEngine.addEntity(new BobaAttackLeft(gameEngine, AM.getAsset("./img/22137.png")));
-		// gameEngine.addEntity(new BobaAttackRight(gameEngine, AM.getAsset("./img/22137Flip.png")));
-	// })
-
+	sleep(17000).then(() => {
+		gameEngine.addEntity(new BobaAtkLeft(gameEngine, AM.getAsset("./img/22137Atk.png")));
+		gameEngine.addEntity(new BobaAtkRight(gameEngine, AM.getAsset("./img/22137AtkFlip.png")));
+	})
     console.log("All Done!");
 });
 
