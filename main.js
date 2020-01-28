@@ -386,8 +386,8 @@ AM.downloadAll(function () {
 		gameEngine.addEntity(new BobaDisappearRight(gameEngine, AM.getAsset("./img/22137Flip.png")));
 	})
 	// sleep(17000).then(() => {
-		gameEngine.addEntity(new BobaAttackLeft(gameEngine, AM.getAsset("./img/22137.png")));
-		gameEngine.addEntity(new BobaAttackRight(gameEngine, AM.getAsset("./img/22137Flip.png")));
+		// gameEngine.addEntity(new BobaAttackLeft(gameEngine, AM.getAsset("./img/22137.png")));
+		// gameEngine.addEntity(new BobaAttackRight(gameEngine, AM.getAsset("./img/22137Flip.png")));
 	// })
 
     console.log("All Done!");
