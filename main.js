@@ -353,10 +353,30 @@ BobaAtkLeft.prototype.update = function () {
     // if (this.x < -230) this.x = 800;
 }
 
+function dragon(game, spritesheet) {
+    this.animation = new Animation(spritesheet, 0, 0, 225, 120, 5, 0.10, 132, false, 1, false);
+    this.x = 300;
+    this.y = 300;
+    this.speed = 200;
+    this.game = game;
+    this.ctx = game.ctx;
+}
+
+dragon.prototype.draw = function () {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+}
+
+dragon.prototype.update = function () {
+    // if (this.animation.elapsedTime < this.animation.totalTime * 8 / 14)
+    //     this.x -= this.game.clockTick * this.speed;
+    // if (this.x < -230) this.x = 800;
+}
+
 AM.queueDownload("./img/22137.png")
 AM.queueDownload("./img/22137Flip.png")
 AM.queueDownload("./img/22137AtkFlip.png")
 AM.queueDownload("./img/22137Atk.png")
+AM.queueDownload("./img/transform.png")
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
@@ -391,6 +411,7 @@ AM.downloadAll(function () {
 		gameEngine.addEntity(new BobaAtkLeft(gameEngine, AM.getAsset("./img/22137Atk.png")));
 		gameEngine.addEntity(new BobaAtkRight(gameEngine, AM.getAsset("./img/22137AtkFlip.png")));
 	})
+	gameEngine.addEntity(new dragon(gameEngine, AM.getAsset("./img/transform.png")));
     console.log("All Done!");
 });
 
