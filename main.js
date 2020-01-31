@@ -372,11 +372,45 @@ dragon.prototype.update = function () {
     // if (this.x < -230) this.x = 800;
 }
 
+function zeroJump(game, spritesheet) {
+	this.animation = new Animation(spritesheet, 0, 0, 50, 50, 11, 0.10, 11, true, 1, false);
+    this.x = 10;
+    this.y = 300;
+    this.speed = 200;
+    this.game = game;
+    this.ctx = game.ctx;
+	// console.log("a")
+}
+
+zeroJump.prototype.draw = function () {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+}
+
+zeroJump.prototype.update = function () {
+    // if (this.animation.elapsedTime < this.animation.totalTime * 8 / 14)
+    this.x += this.game.clockTick * this.speed;
+    if (this.x > 800) this.x = -230;
+	if (this.animation.isDone()) {
+		this.animation.elapsedTime = 0;
+		// this.jumping = false;
+	}
+	var jumpDistance = this.animation.elapsedTime / this.animation.totalTime;
+	var totalHeight = 100;
+
+	if (jumpDistance > 0.5)
+		jumpDistance = 1 - jumpDistance;
+
+	//var height = jumpDistance * 2 * totalHeight;
+	var height = totalHeight*(-4 * (jumpDistance * jumpDistance - jumpDistance));
+	this.y = 300 - height;
+}
+
 AM.queueDownload("./img/22137.png")
 AM.queueDownload("./img/22137Flip.png")
 AM.queueDownload("./img/22137AtkFlip.png")
 AM.queueDownload("./img/22137Atk.png")
 AM.queueDownload("./img/transform.png")
+AM.queueDownload("./img/zeroJump.png")
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
@@ -385,6 +419,7 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
+	gameEngine.addEntity(new zeroJump(gameEngine, AM.getAsset("./img/zeroJump.png")));
 	gameEngine.addEntity(new BobaRunRight(gameEngine, AM.getAsset("./img/22137Flip.png")));
 	gameEngine.addEntity(new BobaWalkRight(gameEngine, AM.getAsset("./img/22137Flip.png")));
 	sleep(4000).then(() => {
